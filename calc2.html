@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор мазуту</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        .container { max-width: 600px; margin: auto; text-align: left; }
+        input { width: 100px; margin: 5px; }
+        button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Калькулятор складу мазуту</h2>
+        <label>Вуглець (C, %): <input type="number" id="C" value="85.50"></label><br>
+        <label>Водень (H, %): <input type="number" id="H" value="11.20"></label><br>
+        <label>Кисень (O, %): <input type="number" id="O" value="0.80"></label><br>
+        <label>Сірка (S, %): <input type="number" id="S" value="2.50"></label><br>
+        <label>Нижча теплота згоряння (горюча маса, МДж/кг): <input type="number" id="LHV_combustible" value="40.40"></label><br>
+        <label>Вологість робочої маси (%): <input type="number" id="W" value="2.00"></label><br>
+        <label>Зольність сухої маси (%): <input type="number" id="A" value="0.15"></label><br>
+        <label>Ванадій (V, мг/кг): <input type="number" id="V" value="333.3"></label><br>
+        <button onclick="calculate()">Розрахувати</button>
+        <h3>Результати:</h3>
+        <p>Склад робочої маси мазуту становить:</p>
+        <p>H<sup>p</sup>=<span id="Hp"></span>%; C<sup>p</sup>=<span id="Cp"></span>%; S<sup>p</sup>=<span id="Sp"></span>%; O<sup>p</sup>=<span id="Op"></span>%;</p>
+        <p>V<sup>p</sup>=<span id="Vp"></span> мг/кг; A<sup>p</sup>=<span id="Ap"></span>%.</p>
+        <p>Нижча теплота згоряння мазуту на робочу масу становить: <span id="LHV_work"></span> МДж/кг.</p>
+    </div>
+    <script>
+        function calculate() {
+            let C = parseFloat(document.getElementById('C').value);
+            let H = parseFloat(document.getElementById('H').value);
+            let O = parseFloat(document.getElementById('O').value);
+            let S = parseFloat(document.getElementById('S').value);
+            let LHV_combustible = parseFloat(document.getElementById('LHV_combustible').value);
+            let W = parseFloat(document.getElementById('W').value);
+            let A = parseFloat(document.getElementById('A').value);
+            let V = parseFloat(document.getElementById('V').value);
+            
+            let Hp = (H * (100 - W) / 100).toFixed(2);
+            let Cp = (C * (100 - W) / 100).toFixed(2);
+            let Sp = (S * (100 - W) / 100).toFixed(2);
+            let Op = (O * (100 - W) / 100).toFixed(2);
+            let Vp = (V * (100 - W) / 100).toFixed(2);
+            let Ap = A.toFixed(2);
+            let LHV_work = (LHV_combustible * (100 - W) / 100).toFixed(2);
+            
+            document.getElementById('Hp').innerText = Hp;
+            document.getElementById('Cp').innerText = Cp;
+            document.getElementById('Sp').innerText = Sp;
+            document.getElementById('Op').innerText = Op;
+            document.getElementById('Vp').innerText = Vp;
+            document.getElementById('Ap').innerText = Ap;
+            document.getElementById('LHV_work').innerText = LHV_work;
+        }
+    </script>
+</body>
+</html>
